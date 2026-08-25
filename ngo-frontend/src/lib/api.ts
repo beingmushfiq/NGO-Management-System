@@ -87,18 +87,23 @@ async function request<T>(endpoint: string, options: RequestInit = {}): Promise<
     if (error instanceof ApiError) {
       throw error;
     }
-    // Network / unreachable error
-    try {
-      const { useAuditStore } = await import("@/store/audit-store");
-      useAuditStore.getState().logError({
-        severity: "NETWORK_OFFLINE",
-        endpoint,
-        statusCode: 0,
-        errorCode: "NETWORK_ERROR",
-        message: error.message || "Failed to reach backend server.",
-        stackTrace: error.stack || "Network connection failed or request timed out.",
-      });
-    } catch {}
+    // Only log network errors if live mode is actively configured and online
+    if (getApiMode() === "live") {
+      try {
+        const { useAuthStore } = await import("@/store");
+        if (useAuthStore.getState().backendOnline) {
+          const { useAuditStore } = await import("@/store/audit-store");
+          useAuditStore.getState().logError({
+            severity: "NETWORK_OFFLINE",
+            endpoint,
+            statusCode: 0,
+            errorCode: "NETWORK_ERROR",
+            message: error.message || "Failed to reach backend server.",
+            stackTrace: error.stack || "Network connection failed or request timed out.",
+          });
+        }
+      } catch {}
+    }
     throw new ApiError(error.message || "Failed to connect to backend server.", 0, "NETWORK_ERROR");
   }
 }

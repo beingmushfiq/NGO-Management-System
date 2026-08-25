@@ -134,34 +134,7 @@ const INITIAL_AUDIT_LOGS: AuditLogEntry[] = [
 ];
 
 // ─── INITIAL ERROR SEED DATA ──────────────────────────────────
-const INITIAL_ERROR_LOGS: ErrorLogEntry[] = [
-  {
-    id: "err-001",
-    severity: "API_ERROR",
-    endpoint: "POST /api/v1/collections",
-    statusCode: 422,
-    errorCode: "IDEMPOTENCY_RETRY_DETECTED",
-    message: "Collection request with duplicate idempotency key rejected to prevent double billing.",
-    stackTrace: "ProcessCollectionService.php:L84 -> IdempotencyCheckMiddleware -> DatabaseLockException",
-    componentName: "CombinedCollectionModal",
-    userRole: "staff",
-    timestamp: "2026-08-25T14:28:10Z",
-    resolved: true,
-  },
-  {
-    id: "err-002",
-    severity: "WARNING",
-    endpoint: "GET /api/v1/installments/due",
-    statusCode: 200,
-    errorCode: "OFFLINE_CACHE_USED",
-    message: "Fetched due installments from IndexedDB local storage during brief field connectivity switch.",
-    stackTrace: "api.ts:L78 (request fallback) -> useDueItems hook",
-    componentName: "StaffDuePage",
-    userRole: "staff",
-    timestamp: "2026-08-25T12:05:30Z",
-    resolved: true,
-  },
-];
+const INITIAL_ERROR_LOGS: ErrorLogEntry[] = [];
 
 interface AuditStoreState {
   auditLogs: AuditLogEntry[];
@@ -198,6 +171,12 @@ export const useAuditStore = create<AuditStoreState>()(
       },
 
       logError: (entry) => {
+        try {
+          if (typeof window !== "undefined" && localStorage.getItem("ngo_api_mode") === "demo") {
+            return;
+          }
+        } catch {}
+
         const newError: ErrorLogEntry = {
           ...entry,
           id: `err-${generateId()}`,
@@ -221,6 +200,19 @@ export const useAuditStore = create<AuditStoreState>()(
       openErrorModal: () => set({ isErrorModalOpen: true }),
       closeErrorModal: () => set({ isErrorModalOpen: false }),
     }),
-    { name: "ngo-audit-storage" }
+    {
+      name: "ngo-audit-storage",
+      version: 2,
+      migrate: (persistedState: any) => ({
+        ...persistedState,
+        errorLogs: (persistedState?.errorLogs || []).filter(
+          (e: any) =>
+            e.id !== "err-001" &&
+            e.id !== "err-002" &&
+            e.errorCode !== "NETWORK_ERROR" &&
+            e.severity !== "NETWORK_OFFLINE"
+        ),
+      }),
+    }
   )
 );
