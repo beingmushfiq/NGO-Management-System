@@ -108,65 +108,71 @@ export const UserProfilePage: React.FC = () => {
     <div className="space-y-6 animate-fade-in pb-16 max-w-5xl mx-auto">
       {/* Profile Header Banner */}
       <div className="relative rounded-3xl overflow-hidden border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm">
-        <div className="h-32 bg-gradient-to-r from-teal-800 via-teal-700 to-emerald-800 p-6 flex items-end">
+        <div className="h-28 sm:h-32 bg-linear-to-r from-teal-800 via-teal-700 to-emerald-800 p-4 sm:p-6 relative">
           <div className="absolute top-4 right-4">
-            <Badge className="bg-white/20 hover:bg-white/30 text-white backdrop-blur-md border-transparent text-xs">
+            <Badge className="bg-white/20 hover:bg-white/30 text-white backdrop-blur-md border-transparent text-xs font-semibold">
               {user?.role?.toUpperCase()} PORTAL
             </Badge>
           </div>
         </div>
 
-        <div className="px-6 pb-6 pt-0 flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4 -mt-12">
-          <div className="flex items-end gap-4">
-            <div className="relative">
-              <div className="flex h-24 w-24 items-center justify-center rounded-3xl bg-teal-600 text-white font-extrabold text-2xl border-4 border-white dark:border-slate-900 shadow-lg">
-                {getInitials(name)}
-              </div>
-              <button
-                className="absolute bottom-0 right-0 p-1.5 rounded-full bg-slate-900 text-white hover:bg-slate-800 shadow-xs cursor-pointer"
-                title="Change Avatar"
-              >
-                <Camera className="h-3.5 w-3.5" />
-              </button>
-            </div>
-
-            <div className="space-y-1 pb-1">
-              <div className="flex items-center gap-2 flex-wrap">
-                <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white">
-                  {name}
-                </h1>
-                <Badge variant="default" className="text-xs bg-teal-100 text-teal-800 dark:bg-teal-900/40 dark:text-teal-300">
-                  {userRole.name}
-                </Badge>
+        <div className="px-6 pb-6 pt-0">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-5">
+              {/* Overlapping Avatar */}
+              <div className="relative -mt-12 sm:-mt-14 shrink-0">
+                <div className="flex h-20 w-20 sm:h-24 sm:w-24 items-center justify-center rounded-3xl bg-teal-600 text-white font-extrabold text-2xl border-4 border-white dark:border-slate-900 shadow-lg">
+                  {getInitials(name)}
+                </div>
+                <button
+                  className="absolute bottom-0 right-0 p-1.5 rounded-full bg-slate-900 text-white hover:bg-slate-800 shadow-md cursor-pointer border-2 border-white dark:border-slate-900"
+                  title="Change Avatar"
+                >
+                  <Camera className="h-3.5 w-3.5" />
+                </button>
               </div>
 
-              <div className="flex items-center gap-3 text-xs text-slate-500 dark:text-slate-400 flex-wrap">
-                <span className="flex items-center gap-1">
-                  <Building className="h-3.5 w-3.5 text-teal-600" />
-                  {branch ? branch.name : "All Branches"}
-                </span>
-                <span>•</span>
-                <span className="flex items-center gap-1">
-                  <Phone className="h-3.5 w-3.5" />
-                  {phone}
-                </span>
-                <span>•</span>
-                <span className="font-mono">
-                  ID: {user?.staffCode || user?.customerId || `USR-${user?.id || "001"}`}
-                </span>
+              {/* User Identity & Badges */}
+              <div className="space-y-1.5 pt-1 sm:pt-3">
+                <div className="flex items-center gap-2.5 flex-wrap">
+                  <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+                    {name}
+                  </h1>
+                  <Badge variant="default" className="text-xs bg-teal-100 text-teal-800 dark:bg-teal-900/50 dark:text-teal-300 font-semibold border border-teal-200 dark:border-teal-800">
+                    {userRole.name}
+                  </Badge>
+                </div>
+
+                <div className="flex items-center gap-3 text-xs text-slate-500 dark:text-slate-400 flex-wrap">
+                  <span className="flex items-center gap-1 font-medium">
+                    <Building className="h-3.5 w-3.5 text-teal-600 dark:text-teal-400" />
+                    {branch ? branch.name : "All Branches"}
+                  </span>
+                  <span>•</span>
+                  <span className="flex items-center gap-1 font-medium">
+                    <Phone className="h-3.5 w-3.5 text-teal-600 dark:text-teal-400" />
+                    {phone}
+                  </span>
+                  <span>•</span>
+                  <span className="font-mono bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded text-[11px] font-semibold text-slate-600 dark:text-slate-300">
+                    ID: {user?.staffCode || user?.customerId || `USR-${user?.id || "001"}`}
+                  </span>
+                </div>
               </div>
             </div>
+
+            {user?.role === "admin" && (
+              <div className="pt-2 sm:pt-0 shrink-0">
+                <Button
+                  size="sm"
+                  onClick={() => setIsRolesModalOpen(true)}
+                  className="bg-teal-700 hover:bg-teal-800 text-white font-semibold text-xs gap-1.5 shadow-sm cursor-pointer"
+                >
+                  <Shield className="h-4 w-4" /> Role & Permissions Manager
+                </Button>
+              </div>
+            )}
           </div>
-
-          {user?.role === "admin" && (
-            <Button
-              size="sm"
-              onClick={() => setIsRolesModalOpen(true)}
-              className="bg-teal-700 hover:bg-teal-800 text-white font-semibold text-xs gap-1.5 shadow-xs shrink-0"
-            >
-              <Shield className="h-4 w-4" /> Role & Permissions Manager
-            </Button>
-          )}
         </div>
 
         {/* Navigation Tabs */}
