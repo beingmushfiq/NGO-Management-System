@@ -1,0 +1,80 @@
+openapi: 3.0.3
+info:
+  title: NGO Loan & Savings Management System API
+  description: Authoritative RESTful API for microfinance credit portfolio, combined collections, and savings ledger operations.
+  version: 1.0.0
+servers:
+  - url: http://localhost:8000/api/v1
+    description: Local Development Server
+paths:
+  /auth/login:
+    post:
+      summary: Authenticate user & issue Sanctum token
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [phone, password]
+              properties:
+                phone:
+                  type: string
+                  example: "01711000001"
+                password:
+                  type: string
+                  example: "password"
+      responses:
+        '200':
+          description: Login successful
+  /dashboard/summary:
+    get:
+      summary: Retrieve portfolio summary KPIs
+      parameters:
+        - name: branch_id
+          in: query
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Dashboard metrics retrieved
+  /collections:
+    post:
+      summary: Atomically process combined collection (Loan + Savings)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [customer_id, payment_method, collection_date]
+              properties:
+                customer_id:
+                  type: integer
+                loan_id:
+                  type: integer
+                installment_id:
+                  type: integer
+                loan_amount:
+                  type: string
+                  example: "1100.00"
+                savings_amount:
+                  type: string
+                  example: "200.00"
+                payment_method:
+                  type: string
+                  enum: [cash, mobile_banking, bank, other]
+                payment_reference:
+                  type: string
+                collection_date:
+                  type: string
+                  format: date
+                idempotency_key:
+                  type: string
+      responses:
+        '200':
+          description: Collection recorded and digital receipt issued
+        '400':
+          description: Financial invariant violation
+        '409':
+          description: Concurrency conflict or duplicate payment

@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="100%" height="100%">
+  <defs>
+    <linearGradient id="primaryGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#14b8a6" />
+      <stop offset="100%" stop-color="#0f766e" />
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fbbf24" />
+      <stop offset="100%" stop-color="#d97706" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#0f766e" flood-opacity="0.25" />
+    </filter>
+  </defs>
+
+  <!-- Background Shield / Rounded Shape -->
+  <rect x="15" y="15" width="170" height="170" rx="44" fill="url(#primaryGrad)" filter="url(#shadow)" />
+  
+  <!-- Outer Decorative Ring -->
+  <circle cx="100" cy="100" r="68" fill="none" stroke="#ffffff" stroke-width="3" stroke-opacity="0.2" stroke-dasharray="6 6" />
+
+  <!-- Central Microfinance Emblem: Tree of Growth & Financial Coins -->
+  <g transform="translate(100, 100)">
+    <!-- Base Hands / Support Arch -->
+    <path d="M -45 25 C -25 45, 25 45, 45 25 C 25 35, -25 35, -45 25 Z" fill="#ffffff" opacity="0.9" />
+    
+    <!-- Central Sprout / Growth Stem -->
+    <path d="M 0 30 L 0 -15" stroke="#ffffff" stroke-width="6" stroke-linecap="round" />
+    
+    <!-- Left Leaf -->
+    <path d="M 0 5 C -25 0, -30 -25, -5 -25 C -5 -10, 0 0, 0 5 Z" fill="#ffffff" />
+    
+    <!-- Right Leaf -->
+    <path d="M 0 -5 C 25 -10, 30 -35, 5 -35 C 5 -20, 0 -10, 0 -5 Z" fill="#ffffff" opacity="0.9" />
+    
+    <!-- Top Prosperity Coin Circle -->
+    <circle cx="0" cy="-45" r="14" fill="url(#accentGrad)" stroke="#ffffff" stroke-width="3" />
+    <text x="0" y="-40" font-family="'Inter', sans-serif" font-size="13" font-weight="900" fill="#ffffff" text-anchor="middle">৳</text>
+  </g>
+</svg>
