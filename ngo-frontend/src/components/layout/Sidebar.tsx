@@ -80,19 +80,29 @@ export const Sidebar: React.FC<SidebarProps> = ({
       {/* Brand Header */}
       <div className="flex h-16 items-center justify-between px-4 border-b border-slate-100 dark:border-slate-800">
         {!isCollapsed ? (
-          <div className="flex items-center gap-2.5 overflow-hidden">
-            <img src="/logo.svg" className="h-9 w-9 shrink-0 object-contain" alt="NGO Logo" />
+          <NavLink
+            to={role === "admin" ? "/admin/dashboard" : role === "staff" ? "/staff/dashboard" : "/customer/overview"}
+            className="flex items-center gap-2.5 overflow-hidden group cursor-pointer hover:opacity-90 transition-opacity"
+            title={`Go to ${role} dashboard`}
+          >
+            <img src="/logo.svg" className="h-9 w-9 shrink-0 object-contain group-hover:scale-105 transition-transform" alt="NGO Logo" />
             <div className="flex flex-col truncate">
-              <span className="font-bold text-sm text-slate-900 dark:text-white truncate">
+              <span className="font-bold text-sm text-slate-900 dark:text-white truncate group-hover:text-teal-700 dark:group-hover:text-teal-400 transition-colors">
                 {org.name}
               </span>
               <span className="text-[10px] text-teal-700 dark:text-teal-400 font-medium truncate">
                 {org.nameBn || "NGO Microfinance"}
               </span>
             </div>
-          </div>
+          </NavLink>
         ) : (
-          <img src="/logo.svg" className="mx-auto h-8 w-8 object-contain" alt="NGO Logo" />
+          <NavLink
+            to={role === "admin" ? "/admin/dashboard" : role === "staff" ? "/staff/dashboard" : "/customer/overview"}
+            className="mx-auto block group cursor-pointer"
+            title={`Go to ${role} dashboard`}
+          >
+            <img src="/logo.svg" className="h-8 w-8 object-contain group-hover:scale-110 transition-transform" alt="NGO Logo" />
+          </NavLink>
         )}
 
         <button
