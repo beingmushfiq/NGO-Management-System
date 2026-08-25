@@ -3,30 +3,32 @@
 # 🏛️ ASHA NGO MICROFINANCE MANAGEMENT SYSTEM
 ### *Enterprise Dual-Ledger Credit Portfolio, Member Savings Vault & Multi-Branch Core Banking Solution*
 
-[![Laravel](https://img.shields.io/badge/Backend-Laravel_11.x-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)](https://laravel.com)
-[![React](https://img.shields.io/badge/Frontend-React_19_+_Vite-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev)
-[![TypeScript](https://img.shields.io/badge/Language-TypeScript_5.x-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
+[![Laravel](https://img.shields.io/badge/Backend-Laravel_13.x-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)](https://laravel.com)
+[![React](https://img.shields.io/badge/Frontend-React_19_+_Vite_8-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev)
+[![TypeScript](https://img.shields.io/badge/Language-TypeScript_6.x-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 [![Tailwind CSS](https://img.shields.io/badge/Styling-Tailwind_CSS_v4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
-[![MRA Regulatory](https://img.shields.io/badge/Compliance-MRA_Certified-059669?style=for-the-badge&logo=shield&logoColor=white)](#-regulatory-compliance)
-[![Build Status](https://img.shields.io/badge/Financial_Audit-100%25_Verified-0D9488?style=for-the-badge&logo=checkmarx&logoColor=white)](#-financial-integrity--audit)
+[![PHP](https://img.shields.io/badge/Runtime-PHP_8.3+-777BB4?style=for-the-badge&logo=php&logoColor=white)](https://www.php.net)
+[![Build Status](https://img.shields.io/badge/Financial_Audit-100%25_Verified-0D9488?style=for-the-badge&logo=checkmarx&logoColor=white)](#audit-integrity)
 
 <br />
 
-**Architected & Developed by [DevCenterPoint](https://devcenterpoint.com)**  
+**Architected & Developed for [NGO Management System](https://github.com/beingmushfiq/NGO-Management-System)**  
 *Engineered for Microfinance Institutions (MFIs), NGOs, and Cooperative Credit Societies in Bangladesh and Emerging Markets.*
 
 ---
 
-[🚀 Quick Start](#-step-by-step-deployment-guide) •
-[📋 Scope of Work](#-scopes-of-work--delivered-architecture) •
-[🛡️ Granular RBAC](#-custom-rbac--permission-matrix) •
-[📊 Database & Invariants](#-database-architecture--financial-invariants) •
-[🔮 Future Scaling](#-future-scaling--next-gen-roadmap)
+[🚀 Quick Start](#deployment-guide) •
+[📋 Scope of Work](#scope-of-work) •
+[🛡️ Granular RBAC](#rbac-system) •
+[📊 Database & Invariants](#database-invariants) •
+[🔒 Audit Verification](#audit-integrity) •
+[🔮 Future Scaling](#roadmap)
 
 </div>
 
 ---
 
+<a id="executive-summary"></a>
 ## 🌟 Executive Summary & Solution Paradigm
 
 Microfinance operations in emerging economies require stringent mathematical accuracy, offline field resilience, and multi-tiered regulatory compliance. Traditional spreadsheets and fragmented accounting software result in **ledger drift, unrecorded collections, loan delinquency, and double-billing**.
@@ -35,7 +37,7 @@ The **ASHA NGO Microfinance System** is an enterprise-grade core microcredit and
 
 ```
 ┌────────────────────────────────────────────────────────────────────────────────────────┐
-│                                DEVተCENTERPOINT CORE ENGINE                             │
+│                                CORE ENGINE ARCHITECTURE                                │
 ├────────────────────────────┬─────────────────────────────┬─────────────────────────────┤
 │   CREDIT & LOAN ENGINE     │   ATOMIC COLLECTION ROUTER  │   MEMBER SAVINGS VAULT      │
 │  • Weekly Installments     │  • Dual-Ledger Allocation   │  • Voluntary Deposits       │
@@ -50,6 +52,7 @@ The **ASHA NGO Microfinance System** is an enterprise-grade core microcredit and
 
 ---
 
+<a id="scope-of-work"></a>
 ## 📋 Scopes of Work & Delivered Architecture
 
 ### 1. 💳 Microcredit Disbursement & Amortization Engine
@@ -70,6 +73,7 @@ The **ASHA NGO Microfinance System** is an enterprise-grade core microcredit and
 * **Voluntary & Counter Deposits**: Support for ad-hoc counter deposits, scheduled weekly savings, and emergency withdrawals with strict liquidity validations.
 * **Vault Settlement**: Full account payout settlement upon member graduation or exit with automated audit trail generation.
 
+<a id="rbac-system"></a>
 ### 4. 🛡️ Custom Role-Based Access Control (RBAC) & Permission Matrix
 * **Custom Roles Engine**: Administrators can define unlimited custom institutional roles (e.g. *Senior Credit Officer*, *Branch Auditor*, *Cashier*, *Field Collector*).
 * **Granular Action Matrix**: Toggles `view`, `create`, `edit`, `delete`, `approve`, `export`, and `reverse` across **9 system modules**:
@@ -116,6 +120,7 @@ The **ASHA NGO Microfinance System** is an enterprise-grade core microcredit and
 
 ---
 
+<a id="database-invariants"></a>
 ## 📊 Database Architecture & Financial Invariants
 
 ```mermaid
@@ -142,6 +147,7 @@ erDiagram
     USERS ||--o{ AUDIT_LOGS : performs
 ```
 
+<a id="audit-integrity"></a>
 ### 🔒 Invariant Verification Script
 Run the automated mathematical consistency audit anytime:
 ```bash
@@ -152,23 +158,24 @@ php artisan ngo:verify-financial-integrity
 
 ---
 
+<a id="deployment-guide"></a>
 ## 🚀 Step-by-Step Deployment Guide
 
 ### 📋 Prerequisites
-* **Operating System**: Linux (Ubuntu 22.04 LTS / Debian 12 / AlmaLinux 9) or Windows Server
-* **PHP**: `PHP 8.2` or `8.3` with extensions: `php-bcmath`, `php-ctype`, `php-curl`, `php-dom`, `php-fileinfo`, `php-json`, `php-mbstring`, `php-openssl`, `php-pcre`, `php-pdo`, `php-sqlite3`/`php-mysql`, `php-tokenizer`, `php-xml`
-* **Web Server**: `Nginx` (Recommended) or `Apache`
-* **Node.js**: `Node.js 20+` LTS & `npm` / `pnpm`
+* **Operating System**: Linux (Ubuntu 22.04 LTS / Debian 12 / AlmaLinux 9) or Windows 10/11 / Server
+* **PHP**: `PHP 8.3+` with extensions: `php-bcmath`, `php-ctype`, `php-curl`, `php-dom`, `php-fileinfo`, `php-json`, `php-mbstring`, `php-openssl`, `php-pcre`, `php-pdo`, `php-sqlite3`/`php-mysql`, `php-tokenizer`, `php-xml`
+* **Node.js**: `Node.js 20+ / 22+` LTS & `npm` / `pnpm`
 * **Database**: `SQLite` (Default zero-config) or `MySQL 8.0+` / `PostgreSQL 16+`
+* **Web Server**: `Nginx` (Recommended) or `Apache`
 
 ---
 
-### 1️⃣ Backend Setup (Laravel 11)
+### 1️⃣ Backend Setup (Laravel 13.x)
 
 ```bash
 # Clone the repository
-git clone https://github.com/devcenterpoint/ngo-microfinance-system.git
-cd ngo-microfinance-system/ngo-backend
+git clone https://github.com/beingmushfiq/NGO-Management-System.git
+cd NGO-Management-System/ngo-backend
 
 # Install production PHP dependencies
 composer install --no-dev --optimize-autoloader
@@ -213,7 +220,7 @@ CORS_ALLOWED_ORIGINS=https://ngo.yourdomain.com
 
 ---
 
-### 2️⃣ Frontend Setup (React 19 + Vite)
+### 2️⃣ Frontend Setup (React 19 + Vite 8)
 
 ```bash
 cd ../ngo-frontend
@@ -265,7 +272,7 @@ server {
         location ~ \.php$ {
             include snippets/fastcgi-php.conf;
             fastcgi_param SCRIPT_FILENAME /var/www/ngo-system/ngo-backend/public/index.php;
-            fastcgi_pass unix:/var/run/php/php8.2-fpm.sock;
+            fastcgi_pass unix:/var/run/php/php8.3-fpm.sock;
         }
     }
 
@@ -298,7 +305,7 @@ version: '3.8'
 
 services:
   ngo-backend:
-    image: php:8.2-fpm-alpine
+    image: php:8.3-fpm-alpine
     container_name: ngo_backend
     restart: unless-stopped
     working_dir: /var/www/html
@@ -325,14 +332,13 @@ services:
 
 ---
 
+<a id="roadmap"></a>
 ## 🔮 Future Scaling & Next-Gen Roadmap
-
-DevCenterPoint has architected this system to scale horizontally from local single-branch NGOs to national multi-region federations:
 
 ### 1. 📱 Offline-First PWA & Android Native Field POS (Q3 2026)
 - **Local SQLite / WatermelonDB sync**: Field officers can collect installments in deep rural areas with zero internet connectivity.
 - **Bluetooth Thermal Receipt Printing**: Instant physical thermal receipts printed via handheld Bluetooth ESC/POS printers.
-- **Biometric Fingerprint Authentication**: Integrated with Bangladesh National ID (NID) biometric smart card readers.
+- **Biometric Fingerprint Authentication**: Integrated with National ID (NID) biometric smart card readers.
 
 ### 2. 📲 Automated MFS Webhook Gateway (bKash, Nagad, Rocket) (Q4 2026)
 - **Direct Borrower Self-Payment**: Members can pay weekly dues directly via bKash Merchant API or Nagad QR code.
@@ -342,14 +348,14 @@ DevCenterPoint has architected this system to scale horizontally from local sing
 - **Repayment Probability Modeling**: Machine learning algorithms analyzing member savings regularity, community guarantor trust networks, and historical repayment cycles.
 - **Early Warning System**: Automated alerts for credit officers when a borrower exhibits behavioral signs of loan delinquency.
 
-### 4. 🏛️ Automated MRA Regulatory XML/JSON Compliance Bridge (Q2 2027)
+### 4. 🏛️ Automated Regulatory XML/JSON Compliance Bridge (Q2 2027)
 - **Microcredit Regulatory Authority (MRA) Automated Submission**: One-click generation and cryptographic signing of MRA Form-1 to Form-8 quarterly compliance filings.
 
 ---
 
 ## 👨‍💻 Engineering Standards & Anti-Drift Contract
 
-To ensure longevity and maintainability, this project follows the strict **DevCenterPoint Living Contract Protocol**:
+To ensure longevity and maintainability, this project follows the strict **Living Contract Protocol**:
 1. **Never diverge code and documentation**: Before altering financial rules, schema, or API routes, documentation is inspected and updated.
 2. **Immutable Double-Entry Accounting**: Ledger entries are additive and atomic; destructive updates to balance fields without corresponding journal rows are strictly prohibited.
 3. **Automated Continuous Verification**: `php artisan test` and `php artisan ngo:verify-financial-integrity` run on every CI/CD push.
@@ -358,12 +364,11 @@ To ensure longevity and maintainability, this project follows the strict **DevCe
 
 <div align="center">
 
-### Crafted with Precision by [DevCenterPoint](https://devcenterpoint.com)
+### Microfinance & Core Banking Solution
 *Transforming Non-Profit & Microfinance Governance Through Intelligent Software Architecture.*
 
-**Inquiries & Commercial Customization**: [contact@devcenterpoint.com](mailto:contact@devcenterpoint.com)  
-**Website**: [https://devcenterpoint.com](https://devcenterpoint.com)
+**Repository**: [https://github.com/beingmushfiq/NGO-Management-System](https://github.com/beingmushfiq/NGO-Management-System)
 
-© 2026 DevCenterPoint. All rights reserved.
+© 2026 All rights reserved.
 
 </div>
