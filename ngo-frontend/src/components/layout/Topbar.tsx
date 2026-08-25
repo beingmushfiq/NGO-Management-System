@@ -88,19 +88,9 @@ export const Topbar: React.FC<TopbarProps> = ({
     setIsSyncing(false);
   };
 
-  const handleRoleSwitch = async (role: "admin" | "staff" | "customer", customerId?: string) => {
-    setIsSyncing(true);
-
-    const personaPhones: Record<string, string> = {
-      admin: "01711-000001",
-      staff: "01711-000002",
-      customer: "01712-345678",
-    };
-
-    const phone = personaPhones[role];
-    await loginWithCredentials(phone, "password123");
-
-    setIsSyncing(false);
+  const handleRoleSwitch = (role: "admin" | "staff" | "customer", customerId?: string) => {
+    // Immediately set active user in local state
+    login(role, customerId);
 
     if (role === "admin") {
       toast.info("Switched to System Administrator", "Executive overview, multi-branch audits, and credit governance.");

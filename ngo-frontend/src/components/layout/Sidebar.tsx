@@ -163,6 +163,56 @@ export const Sidebar: React.FC<SidebarProps> = ({
         })}
       </div>
 
+      {/* Persona Quick Switcher in Sidebar */}
+      {!isCollapsed && (
+        <div className="px-3 pt-2 pb-1 border-t border-slate-100 dark:border-slate-800">
+          <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-1 px-1">
+            Switch Persona (রোল পরিবর্তন)
+          </div>
+          <div className="grid grid-cols-3 gap-1 bg-slate-50 dark:bg-slate-800/40 p-1 rounded-xl">
+            <button
+              onClick={() => {
+                useAuthStore.getState().login("admin");
+              }}
+              className={cn(
+                "py-1 px-1.5 text-[11px] rounded-lg font-medium transition-colors text-center cursor-pointer",
+                role === "admin"
+                  ? "bg-teal-700 text-white font-bold shadow-xs"
+                  : "text-slate-600 hover:bg-white dark:text-slate-400 dark:hover:bg-slate-700"
+              )}
+            >
+              Admin
+            </button>
+            <button
+              onClick={() => {
+                useAuthStore.getState().login("staff");
+              }}
+              className={cn(
+                "py-1 px-1.5 text-[11px] rounded-lg font-medium transition-colors text-center cursor-pointer",
+                role === "staff"
+                  ? "bg-teal-700 text-white font-bold shadow-xs"
+                  : "text-slate-600 hover:bg-white dark:text-slate-400 dark:hover:bg-slate-700"
+              )}
+            >
+              Staff
+            </button>
+            <button
+              onClick={() => {
+                useAuthStore.getState().login("customer", "CUS-1024");
+              }}
+              className={cn(
+                "py-1 px-1.5 text-[11px] rounded-lg font-medium transition-colors text-center cursor-pointer",
+                role === "customer"
+                  ? "bg-teal-700 text-white font-bold shadow-xs"
+                  : "text-slate-600 hover:bg-white dark:text-slate-400 dark:hover:bg-slate-700"
+              )}
+            >
+              Member
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* User Footer */}
       <div className="border-t border-slate-100 p-3 dark:border-slate-800">
         <div
