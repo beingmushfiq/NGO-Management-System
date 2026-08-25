@@ -37,21 +37,37 @@ export const LoginPage: React.FC = () => {
     e.preventDefault();
     setIsLoading(true);
 
-    const result = await loginWithCredentials(phone, password);
-    setIsLoading(false);
+    try {
+      const result = await loginWithCredentials(phone, password);
+      if (result.success) {
+        toast.success("Authentication Successful", "Connected to live backend.");
+        const user = useAuthStore.getState().user;
+        if (user?.role === "admin") navigate("/admin/dashboard");
+        else if (user?.role === "staff") navigate("/staff/dashboard");
+        else navigate("/customer/overview");
+      } else {
+        if (phone.includes("000002")) login("staff");
+        else if (phone.includes("345678")) login("customer", "CUS-1024");
+        else login("admin");
 
-    if (result.success) {
-      toast.success("Authentication Successful", "Connected to Laravel + MySQL backend.");
+        toast.info("Demo Mode Active", "Logged in with standalone institutional data.");
+        const user = useAuthStore.getState().user;
+        if (user?.role === "admin") navigate("/admin/dashboard");
+        else if (user?.role === "staff") navigate("/staff/dashboard");
+        else navigate("/customer/overview");
+      }
+    } catch {
+      if (phone.includes("000002")) login("staff");
+      else if (phone.includes("345678")) login("customer", "CUS-1024");
+      else login("admin");
+
+      toast.info("Demo Mode Active", "Logged in with standalone institutional data.");
       const user = useAuthStore.getState().user;
       if (user?.role === "admin") navigate("/admin/dashboard");
       else if (user?.role === "staff") navigate("/staff/dashboard");
       else navigate("/customer/overview");
-    } else {
-      // Prompt user with fallback option
-      toast.warning("Live Backend Note", result.message || "Switching to instant demo fallback.");
-      // Fallback
-      login("admin");
-      navigate("/admin/dashboard");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -65,8 +81,16 @@ export const LoginPage: React.FC = () => {
     };
 
     const phone = personaPhones[role];
-    await loginWithCredentials(phone, "password123");
-    setIsLoading(false);
+    try {
+      const result = await loginWithCredentials(phone, "password123");
+      if (!result.success) {
+        login(role, customerId);
+      }
+    } catch {
+      login(role, customerId);
+    } finally {
+      setIsLoading(false);
+    }
 
     if (role === "admin") navigate("/admin/dashboard");
     else if (role === "staff") navigate("/staff/dashboard");
